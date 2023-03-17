@@ -48,3 +48,4 @@
 #include <robmikh.common/d3dHelpers.desktop.h>
 #include <robmikh.common/composition.desktop.interop.h>
 #include <robmikh.common/capture.desktop.interop.h>
+#include <robmikh.common/wcliparse.h>
