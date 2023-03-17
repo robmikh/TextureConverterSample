@@ -133,6 +133,7 @@ void TextureConverter::ProcessInput(winrt::com_ptr<ID3D11Texture2D> const& textu
     }
 
     // Next, run the compute shader
+    // The shader will swizzle the pixels as well as drop the alpha channel.
     m_d3dContext->CSSetShader(m_conversionShader.get(), nullptr, 0);
     std::vector<ID3D11ShaderResourceView*> srvs = { m_intermediateShaderResourceView.get() };
     m_d3dContext->CSSetShaderResources(0, static_cast<uint32_t>(srvs.size()), srvs.data());
@@ -143,8 +144,7 @@ void TextureConverter::ProcessInput(winrt::com_ptr<ID3D11Texture2D> const& textu
 
     m_d3dContext->Dispatch((m_targetWidth / 8) + 1, (m_targetHeight / 8) + 1, 1);
 
-    // Copy the result to our staging buffer so we can
-    // copy it into system memory.
+    // Copy the result to our staging buffer so we can copy it into system memory.
     m_d3dContext->CopyResource(m_stagingTexture.get(), m_outputTexture.get());
 
     // Copy the bytes
