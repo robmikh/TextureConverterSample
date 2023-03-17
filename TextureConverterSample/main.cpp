@@ -4,6 +4,7 @@
 namespace winrt
 {
     using namespace Windows::Foundation;
+    using namespace Windows::Foundation::Metadata;
     using namespace Windows::Foundation::Numerics;
     using namespace Windows::Graphics;
     using namespace Windows::Graphics::Capture;
@@ -79,6 +80,13 @@ winrt::com_ptr<ID3D11Texture2D> TakeScreenshot(winrt::com_ptr<ID3D11Device> cons
             frame = framePool.TryGetNextFrame();
             captureEvent.SetEvent();
         });
+
+    session.IsCursorCaptureEnabled(false);
+    // This API was introduced in Windows 11
+    if (winrt::ApiInformation::IsPropertyPresent(winrt::name_of<winrt::GraphicsCaptureSession>(), L"IsBorderRequired"))
+    {
+        session.IsBorderRequired(false);
+    }
 
     // Wait for a frame to come back
     session.StartCapture();
