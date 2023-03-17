@@ -51,19 +51,6 @@ int __stdcall wmain()
 
     // Dump raw bytes to disk
     DumpImageToDisk(bytes, "convertedBitmap", width, height);
-    
-    // DEBUG
-    width = 50;
-    height = 50;
-    bytes.resize(width * height * 3);
-    for (auto i = 0; i < width * height; i++)
-    {
-        auto indexBase = i * 3;
-        bytes[indexBase + 0] = 255;
-        bytes[indexBase + 1] = 0;
-        bytes[indexBase + 2] = 0;
-    }
-    DumpImageToDisk(bytes, "debug1", width, height);
 
     return 0;
 }
