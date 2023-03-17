@@ -38,10 +38,14 @@ int __stdcall wmain()
     }
     auto d3dDevice = util::CreateD3DDevice(d3dFlags);
 
+    // Init D2D
+    auto d2dFactory = util::CreateD2DFactory();
+    auto d2dDevice = util::CreateD2DDevice(d2dFactory, d3dDevice);
+
     // Init our converter
     uint32_t width = 640;
     uint32_t height = 480;
-    auto converter = TextureConverter(d3dDevice, width, height);
+    auto converter = TextureConverter(d3dDevice, d2dDevice, width, height);
     
     // Our input will be a screenshot of the primary monitor
     auto inputTexture = TakeScreenshot(d3dDevice);

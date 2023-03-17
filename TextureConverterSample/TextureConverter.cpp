@@ -32,7 +32,8 @@ winrt::com_ptr<ID2D1Bitmap1> CreateBitmapFromTexture(
     winrt::com_ptr<ID2D1DeviceContext> const& d2dContext);
 
 TextureConverter::TextureConverter(
-    winrt::com_ptr<ID3D11Device> const& d3dDevice, 
+    winrt::com_ptr<ID3D11Device> const& d3dDevice,
+    winrt::com_ptr<ID2D1Device> const& d2dDevice,
     uint32_t width, 
     uint32_t height)
 {
@@ -41,9 +42,8 @@ TextureConverter::TextureConverter(
     m_targetWidth = width;
     m_targetHeight = height;
 
-    // Init D2D
-    m_d2dFactory = util::CreateD2DFactory();
-    m_d2dDevice = util::CreateD2DDevice(m_d2dFactory, m_d3dDevice);
+    // Create our device context
+    m_d2dDevice = d2dDevice;
     winrt::check_hresult(m_d2dDevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, m_d2dContext.put()));
 
     // Create our textures

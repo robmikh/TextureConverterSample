@@ -3,7 +3,11 @@
 class TextureConverter 
 {
 public:
-	TextureConverter(winrt::com_ptr<ID3D11Device> const& d3dDevice, uint32_t width, uint32_t height);
+	TextureConverter(
+		winrt::com_ptr<ID3D11Device> const& d3dDevice,
+		winrt::com_ptr<ID2D1Device> const& d2dDevice,
+		uint32_t width, 
+		uint32_t height);
 
 	void ProcessInput(winrt::com_ptr<ID3D11Texture2D> const& texture, std::vector<byte>& bytes);
 
@@ -11,7 +15,6 @@ private:
 	winrt::com_ptr<ID3D11Device> m_d3dDevice;
 	uint32_t m_targetWidth = 0;
 	uint32_t m_targetHeight = 0;
-	winrt::com_ptr<ID2D1Factory1> m_d2dFactory;
 	winrt::com_ptr<ID2D1Device> m_d2dDevice;
 	winrt::com_ptr<ID2D1DeviceContext> m_d2dContext;
 	winrt::com_ptr<ID3D11DeviceContext> m_d3dContext;
